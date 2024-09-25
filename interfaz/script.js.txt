@@ -1,0 +1,19 @@
+document.getElementById('symptomForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Evitar el envío del formulario
+
+    const symptoms = Array.from(document.querySelectorAll('input[name="symptoms"]:checked')).map(el => el.value);
+    let diagnosis = '';
+
+    // Lógica simple de diagnóstico
+    if (symptoms.includes('fiebre') && symptoms.includes('tos')) {
+        diagnosis = "Posible gripe.";
+    } else if (symptoms.includes('fiebre') && symptoms.includes('erupción')) {
+        diagnosis = "Posible sarampión.";
+    } else if (symptoms.length === 0) {
+        diagnosis = "Por favor, seleccione al menos un síntoma.";
+    } else {
+        diagnosis = "Síntomas no reconocidos. Por favor, consulte a un médico.";
+    }
+
+    document.getElementById('result').innerText = diagnosis;
+});

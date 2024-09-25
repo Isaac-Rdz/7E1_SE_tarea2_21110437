@@ -1,0 +1,62 @@
+class KnowledgeBase:
+    def __init__(self):
+        self.rules = []  # Almacena las reglas
+        self.facts = {}  # Almacena los hechos
+        self.explanations = []  # Almacena explicaciones
+
+    def add_rule(self, rule, explanation):
+        """Agregar una regla con su explicación."""
+        self.rules.append(rule)
+        self.explanations.append(explanation)
+
+    def add_fact(self, key, value):
+        """Agregar un hecho a la base de hechos."""
+        self.facts[key] = value
+
+    def evaluate_rules(self):
+        """Evaluar las reglas y proporcionar explicaciones."""
+        results = []
+        for i, rule in enumerate(self.rules):
+            if rule['condition'](self.facts):
+                results.append(rule['action']())
+                print(f"Explicación: {self.explanations[i]}")
+        return results
+
+
+class ExpertSystem:
+    def __init__(self):
+        self.kb = KnowledgeBase()
+
+    def diagnose(self):
+        print("Evaluando síntomas...")
+        self.kb.evaluate_rules()
+
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    system = ExpertSystem()
+
+    # Definir reglas y explicaciones
+    rule1 = {
+        'condition': lambda facts: facts.get('fiebre', False) and facts.get('tos', False),
+        'action': lambda: "Posible gripe."
+    }
+    explanation1 = "La fiebre y la tos son síntomas comunes de la gripe."
+
+    rule2 = {
+        'condition': lambda facts: facts.get('fiebre', False) and facts.get('erupción', False),
+        'action': lambda: "Posible sarampión."
+    }
+    explanation2 = "La fiebre y la erupción son síntomas comunes del sarampión."
+
+    # Agregar reglas y explicaciones a la base de conocimientos
+    system.kb.add_rule(rule1, explanation1)
+    system.kb.add_rule(rule2, explanation2)
+
+    # Agregar hechos a la base de hechos
+    system.kb.add_fact('fiebre', True)
+    system.kb.add_fact('tos', True)
+    system.kb.add_fact('erupción', False)
+
+    # Diagnosticar
+    system.diagnose()

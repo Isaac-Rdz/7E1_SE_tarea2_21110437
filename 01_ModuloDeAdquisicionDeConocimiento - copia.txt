@@ -1,0 +1,33 @@
+class KnowledgeBase:
+    def __init__(self):
+        self.knowledge = {}
+
+    def add_knowledge(self, key, value):
+        """Agregar conocimiento a la base de datos."""
+        self.knowledge[key] = value
+
+    def retrieve_knowledge(self, key):
+        """Recuperar conocimiento de la base de datos."""
+        return self.knowledge.get(key, "Conocimiento no encontrado.")
+
+    def update_knowledge(self, key, value):
+        """Actualizar conocimiento existente."""
+        if key in self.knowledge:
+            self.knowledge[key] = value
+        else:
+            print("Clave no encontrada. No se puede actualizar.")
+
+    def display_knowledge(self):
+        """Mostrar todo el conocimiento almacenado."""
+        for key, value in self.knowledge.items():
+            print(f"{key}: {value}")
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    kb = KnowledgeBase()
+    kb.add_knowledge("Python", "Un lenguaje de programación de alto nivel.")
+    kb.add_knowledge("Sistema Experto", "Un sistema que emula la toma de decisiones de un experto humano.")
+
+    print(kb.retrieve_knowledge("Python"))
+    kb.update_knowledge("Python", "Un lenguaje versátil y popular.")
+    kb.display_knowledge()
